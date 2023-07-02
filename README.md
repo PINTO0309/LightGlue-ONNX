@@ -6,6 +6,7 @@
 3. Although the feature points are insufficiently narrowed down by score, only 20 of the inference results need to be filtered by score.
 4. The program should determine the score thresholds. For example, use Numpy.
 5. Inference performance is only slightly worse because 20 fixed points are needlessly processed.
+6. Since it is a pain to write preprocessing of the input image in the program, grayscale conversion is included in the model.
   ![image](https://github.com/PINTO0309/LightGlue-ONNX/assets/33194443/f6980a01-fea9-42f7-a74d-deff7a902cab)
 
 ---
