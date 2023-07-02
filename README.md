@@ -3,15 +3,17 @@
 ## PINTO Custom
 1. In the process of processing, the feature point narrowing process by score threshold is often used, which causes onnxruntime to terminate abnormally when the number of detected points reaches zero.
 2. Abolish the narrowing of feature points by score (heavy use of `NonZero` judgment) and change to a fixed extraction of the top 20 scores.
-3. Although the feature points are insufficiently narrowed down by score, only 20 of the inference results need to be filtered by score.
-4. The program should determine the score thresholds. For example, use Numpy.
-5. The process of removing feature points contained in the top, bottom, left, and right 4 pixels near the edges of the image has been removed from the onnx. This is to eliminate from onnx the `NonZero` processing that sacrifices inference performance and generality of the model.
+  https://github.com/PINTO0309/LightGlue-ONNX/blob/447aad17685e2edcfd2b64ae288d0bfc1f0cbdd4/lightglue_onnx/superpoint.py#L105-L142
+  https://github.com/PINTO0309/LightGlue-ONNX/blob/447aad17685e2edcfd2b64ae288d0bfc1f0cbdd4/lightglue_onnx/superpoint.py#L233-L243
+4. Although the feature points are insufficiently narrowed down by score, only 20 of the inference results need to be filtered by score.
+5. The program should determine the score thresholds. For example, use Numpy.
+6. The process of removing feature points contained in the top, bottom, left, and right 4 pixels near the edges of the image has been removed from the onnx. This is to eliminate from onnx the `NonZero` processing that sacrifices inference performance and generality of the model.
   https://github.com/PINTO0309/LightGlue-ONNX/blob/31f93488b40b500caf07b1d4c7b8807fe8f5ac18/lightglue_onnx/superpoint.py#L253-L257
-6. Inference performance is only slightly worse because 20 fixed points are needlessly processed.
-7. Since it is a pain to write preprocessing of the input image in the program, grayscale conversion is included in the model.
+7. Inference performance is only slightly worse because 20 fixed points are needlessly processed.
+8. Since it is a pain to write preprocessing of the input image in the program, grayscale conversion is included in the model.
   ![image](https://github.com/PINTO0309/LightGlue-ONNX/assets/33194443/f6980a01-fea9-42f7-a74d-deff7a902cab)
-8. Since my implementation is only temporary and fabio-sim seems to be improving the functionality very frequently, I think it is more reasonable to wait for fabio-sim to improve the functionality.
-9. All OPs can be converted to TensorRT Engine. It will be a highly efficient model that is not offloaded to the CPU.
+9. Since my implementation is only temporary and fabio-sim seems to be improving the functionality very frequently, I think it is more reasonable to wait for fabio-sim to improve the functionality.
+10. All OPs can be converted to TensorRT Engine. It will be a highly efficient model that is not offloaded to the CPU.
   ![image](https://github.com/PINTO0309/LightGlue-ONNX/assets/33194443/84feb402-a3d5-47f6-a34e-62b5d40b3127)
   ![image](https://github.com/PINTO0309/LightGlue-ONNX/assets/33194443/bcfec240-2868-42dd-8f3e-1b4169ff3010)
 
