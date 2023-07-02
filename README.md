@@ -1,5 +1,15 @@
 # LightGlue ONNX
 
+## PINTO Custom
+1. In the process of processing, the feature point narrowing process by score threshold is often used, which causes onnxruntime to terminate abnormally when the number of detected points reaches zero.
+2. Abolish the narrowing of feature points by score (heavy use of `NonZero` judgment) and change to a fixed extraction of the top 20 scores.
+3. Although the feature points are insufficiently narrowed down by score, only 20 of the inference results need to be filtered by score.
+4. The program should determine the score thresholds. For example, use Numpy.
+5. Inference performance is only slightly worse because 20 fixed points are needlessly processed.
+  ![image](https://github.com/PINTO0309/LightGlue-ONNX/assets/33194443/f6980a01-fea9-42f7-a74d-deff7a902cab)
+
+---
+
 Open Neural Network Exchange (ONNX) compatible implementation of [LightGlue: Local Feature Matching at Light Speed](https://github.com/cvg/LightGlue). The ONNX model format allows for interoperability across different platforms with support for multiple execution providers, and removes Python-specific dependencies such as PyTorch.
 
 <p align="center"><a href="https://arxiv.org/abs/2306.13643"><img src="assets/easy_hard.jpg" alt="LightGlue figure" width=80%></a>
