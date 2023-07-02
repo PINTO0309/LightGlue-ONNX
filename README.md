@@ -8,6 +8,7 @@
 5. Inference performance is only slightly worse because 20 fixed points are needlessly processed.
 6. Since it is a pain to write preprocessing of the input image in the program, grayscale conversion is included in the model.
   ![image](https://github.com/PINTO0309/LightGlue-ONNX/assets/33194443/f6980a01-fea9-42f7-a74d-deff7a902cab)
+7. Since my implementation is only temporary and fabio-sim seems to be improving the functionality very frequently, I think it is more reasonable to wait for fabio-sim to improve the functionality.
 
 ---
 
