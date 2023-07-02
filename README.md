@@ -9,6 +9,10 @@
 6. Since it is a pain to write preprocessing of the input image in the program, grayscale conversion is included in the model.
   ![image](https://github.com/PINTO0309/LightGlue-ONNX/assets/33194443/f6980a01-fea9-42f7-a74d-deff7a902cab)
 7. Since my implementation is only temporary and fabio-sim seems to be improving the functionality very frequently, I think it is more reasonable to wait for fabio-sim to improve the functionality.
+8. All OPs can be converted to TensorRT Engine. It will be a highly efficient model that is not offloaded to the CPU.
+  ![image](https://github.com/PINTO0309/LightGlue-ONNX/assets/33194443/84feb402-a3d5-47f6-a34e-62b5d40b3127)
+  ![image](https://github.com/PINTO0309/LightGlue-ONNX/assets/33194443/bcfec240-2868-42dd-8f3e-1b4169ff3010)
+
 
 ---
 
