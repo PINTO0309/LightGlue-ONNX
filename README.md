@@ -6,7 +6,16 @@
   https://github.com/PINTO0309/LightGlue-ONNX/blob/447aad17685e2edcfd2b64ae288d0bfc1f0cbdd4/lightglue_onnx/superpoint.py#L105-L142
   https://github.com/PINTO0309/LightGlue-ONNX/blob/447aad17685e2edcfd2b64ae288d0bfc1f0cbdd4/lightglue_onnx/superpoint.py#L233-L243
 4. Although the feature points are insufficiently narrowed down by score, only 20 of the inference results need to be filtered by score.
-5. The program should determine the score thresholds. For example, use Numpy.
+5. The program should determine the score thresholds. For example, use Numpy. The score threshold for feature point extraction in this paper is `0.0005`.
+    ```python
+    keep0 = mscores0 >= 0.0005
+    kpts0 = kpts0[keep0]
+    mscores0 = mscores0[keep0]
+  
+    keep1 = mscores1 >= 0.0005
+    kpts1 = kpts1[keep1]
+    mscores1 = mscores0[keep1]
+    ```
 6. The process of removing feature points contained in the top, bottom, left, and right 4 pixels near the edges of the image has been removed from the onnx. This is to eliminate from onnx the `NonZero` processing that sacrifices inference performance and generality of the model.
   https://github.com/PINTO0309/LightGlue-ONNX/blob/31f93488b40b500caf07b1d4c7b8807fe8f5ac18/lightglue_onnx/superpoint.py#L253-L257
 7. Inference performance is only slightly worse because 20 fixed points are needlessly processed.
