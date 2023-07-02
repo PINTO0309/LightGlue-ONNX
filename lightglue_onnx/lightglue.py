@@ -64,7 +64,7 @@ class FastAttention(nn.Module):
         self.s = dim**-0.5
 
     def forward(self, q, k, v) -> torch.Tensor:
-        if hasattr(F, "scaled_dot_product_attention"):
+        if True:  # hasattr(F, "scaled_dot_product_attention"):
             q, k, v = [x.contiguous() for x in [q, k, v]]
             return F.scaled_dot_product_attention(q, k, v)
         else:

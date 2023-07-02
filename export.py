@@ -4,7 +4,7 @@ import torch
 
 from lightglue_onnx import DISK, LightGlue, LightGlueEnd2End, SuperPoint
 from lightglue_onnx.end2end import normalize_keypoints
-from lightglue_onnx.ops import patch_disk_convolution_mode, register_aten_sdpa
+from lightglue_onnx.ops import patch_disk_convolution_mode
 from lightglue_onnx.utils import load_image, rgb_to_grayscale
 
 
@@ -47,16 +47,6 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--dynamic", action="store_true", help="Whether to allow dynamic image sizes."
     )
-
-    # Extractor-specific args:
-    parser.add_argument(
-        "--max_num_keypoints",
-        type=int,
-        default=None,
-        required=False,
-        help="Maximum number of keypoints outputted by the extractor.",
-    )
-
     return parser.parse_args()
 
 
@@ -69,7 +59,6 @@ def export_onnx(
     img1_path="assets/sacre_coeur2.jpg",
     end2end=False,
     dynamic=False,
-    max_num_keypoints=None,
 ):
     # Handle args
     if extractor_path is not None and end2end:
@@ -93,26 +82,19 @@ def export_onnx(
     extractor_type = extractor_type.lower()
     if extractor_type == "superpoint":
         # SuperPoint works on grayscale images.
-        image0 = rgb_to_grayscale(image0)
-        image1 = rgb_to_grayscale(image1)
-        extractor = SuperPoint(max_num_keypoints=max_num_keypoints).eval()
+        # image0 = rgb_to_grayscale(image0)
+        # image1 = rgb_to_grayscale(image1)
+        extractor = SuperPoint().eval()
         lightglue = LightGlue(extractor_type).eval()
     elif extractor_type == "disk":
-        extractor = DISK(max_num_keypoints=max_num_keypoints).eval()
+        extractor = DISK().eval()
         lightglue = LightGlue(extractor_type).eval()
 
-        if torch.__version__ < "2.1":
-            patch_disk_convolution_mode(extractor)
+        patch_disk_convolution_mode(extractor)  # Fixed in PyTorch >= 2.1
     else:
         raise NotImplementedError(
             f"LightGlue has not been trained on {extractor_type} features."
         )
-
-    if (
-        hasattr(torch.nn.functional, "scaled_dot_product_attention")
-        and torch.__version__ < "2.1"
-    ):
-        register_aten_sdpa(opset_version=14)
 
     # ONNX Export
     if end2end:
