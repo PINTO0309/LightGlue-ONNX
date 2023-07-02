@@ -25,7 +25,7 @@
 10. All OPs can be converted to TensorRT Engine. It will be a highly efficient model that is not offloaded to the CPU.
   ![image](https://github.com/PINTO0309/LightGlue-ONNX/assets/33194443/84feb402-a3d5-47f6-a34e-62b5d40b3127)
   ![image](https://github.com/PINTO0309/LightGlue-ONNX/assets/33194443/bcfec240-2868-42dd-8f3e-1b4169ff3010)
-
+11. If you want to calculate `ArgMax` for each batch size, you can loop through the process described in `2.`
 
 ---
 
