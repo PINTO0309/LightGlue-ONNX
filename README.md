@@ -1,5 +1,7 @@
 # LightGlue ONNX
 
+Forked from: https://github.com/fabio-sim/LightGlue-ONNX
+
 ## PINTO Custom
 1. In the process of processing, the feature point narrowing process by score threshold is often used, which causes onnxruntime to terminate abnormally when the number of detected points reaches zero.
 2. Abolish the narrowing of feature points by score (heavy use of `NonZero` judgment) and change to a fixed extraction of the top 20 scores.
